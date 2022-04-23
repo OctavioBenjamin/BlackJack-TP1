@@ -10,9 +10,6 @@
 
 import random
 
-print("---------------------")
-print("| TURNO DEL JUGADOR |")
-print("---------------------")
 
 # Cartas del jugador
 n_carta1 = random.randint(2, 11); n_carta2 = random.randint(2, 11); n_carta3 = random.randint(2, 11)
@@ -20,10 +17,17 @@ n_carta1 = random.randint(2, 11); n_carta2 = random.randint(2, 11); n_carta3 = r
 # Cartas del Crupier
 n_carta1_c = random.randint(2, 11); n_carta2_c = random.randint(2, 11); n_carta3_c = random.randint(2, 11)
 
+# Palo y simbolos para cartas con tuplas
+# La carta 10, J, Q y K se obtiene a partir de un valor 10 bases y se obtiene el simbolo a partir de una tupla,
+# ya que las 4 cartas valen 10 puntos en la mano
 p = ["♡", "♢", "♤", "♧"]
 letra = ["10", "J", "Q", "K"]
 palo_j = p[random.randint(0,3)]; palo_j2 = p[random.randint(0,3)]; palo_j3 = p[random.randint(0,3)]
 palo_c = p[random.randint(0,3)]; palo_c2 = p[random.randint(0,3)]; palo_c3 = p[random.randint(0,3)]
+
+
+# F representa la figura (Por ejemplo, Q) si esta vacía (" ") signifiaca que la carta es un nunmero
+# del 2 al 9, o sea que no pertenece a ninguna figura
 
 # Figuras para cartas de valor 10 y AS del jugador
 f_carta1 = " "; f_carta2 = " "; f_carta3 = " "
@@ -36,6 +40,10 @@ mano_jugador = n_carta1 + n_carta2
 mano_crupier = n_carta1_c + n_carta2_c
 
 # Logica de cartas del jugador
+print("---------------------")
+print("| TURNO DEL JUGADOR |")
+print("---------------------")
+
 if n_carta1 == 10:  # Dar una figura a las cartas que valgan 10 puntos (J, Q y K)
     f_carta1 = letra[random.randint(0, 3)]
 if n_carta2 == 10:
@@ -54,7 +62,7 @@ if mano_jugador > 21:  # Definir si el AS vale 1 punto, cuando la mano supera 21
     elif f_carta1 == "A" and f_carta2 == "A":
         mano_jugador -= 10
 
-# Imprimir las cartas, dependiendo si son letras o numeros
+# Imprimir las cartas, dependiendo si son letras o numeros, como dijimos, si la figura esta vacia (" "), representa un numero del 2 al 9
 if f_carta1 == " " and f_carta2 == " ":  # Ej: 3 y 5
     print("Cartas del JUGADOR: ", str(n_carta1) + palo_j," ",str(n_carta2) + palo_j2)
     print("Mano: ", mano_jugador)
@@ -71,7 +79,7 @@ elif f_carta1 != " " and f_carta2 != " ":  # Ej: Q y J
     print("Cartas del JUGADOR: ", str(f_carta1) + palo_j," ", str(f_carta2) + palo_j2)
     print("Mano: ", mano_jugador)
 
-# El jugador pide la tercera Carta si la mano es menos o igual a 16
+# El jugador pide la tercera Carta si la mano es menor o igual a 16
 if mano_jugador <= 16:
 
     # Define si la carta AS vale 1 o 11
@@ -83,11 +91,11 @@ if mano_jugador <= 16:
             n_carta3 = 1
             mano_jugador += n_carta3
 
-    # Le da una figura a una carta si vale 10 puntos (J, Q o K)
+    # Le da una figura a una carta si vale 10 puntos (J, Q o K) a la CARTA 3
     if n_carta3 == 10:
         f_carta3 = letra[random.randint(0, 3)]
 
-    # Le da figura al AS
+    # Le da figura al AS a la CARTA 3
     if n_carta3 == 11:
         f_carta3 = "A"
     elif n_carta3 == 1:
@@ -100,18 +108,22 @@ if mano_jugador <= 16:
     elif f_carta3 == " ":
         mano_jugador += n_carta3
         print("El JUGADOR obtiene una tercera carta: " + str(n_carta3) + palo_j3)
+
 else:
     print("No se entrega tercera carta")
     print(" ")
-    # Mano final de jugador
+
+# Mano final de jugador
 print("La mano final del JUGADOR: ", mano_jugador)
 print(" ")
 
+
+# Logica del Crupier basado en la logica anterior
 print("---------------------")
 print("| TURNO DEL CRUPIER |")
 print("---------------------")
 
-# Logica de cartas del jugador
+# Logica de cartas del crupier
 if n_carta1_c == 10:  # Dar una figura a las cartas que valgan 10 puntos (J, Q y K)
     f_carta1_c = letra[random.randint(0, 3)]
 if n_carta2_c == 10:
@@ -183,6 +195,8 @@ else:
 print("La mano final del CRUPIER: ", mano_crupier)
 print(" ")
 
+
+# Se definen los resultados
 print("--------------")
 print("| RESULTADOS |")
 print("--------------")
@@ -216,8 +230,10 @@ if mano_jugador < 21 and mano_crupier < 21:
 
 elif mano_crupier > 21 and mano_jugador <= 21:
     print("El ganador es el JUGADOR")
+
 elif mano_jugador > 21 and mano_crupier <= 21:
     print ("El ganador es el CRUPIER")
+
 elif mano_jugador > 21 and mano_crupier > 21:
     print("El JUGADOR y el CRUPIER pasaron de 21, AMBOS pierden")
 
